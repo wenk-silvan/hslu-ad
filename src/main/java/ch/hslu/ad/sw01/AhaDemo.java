@@ -38,7 +38,6 @@ class AhaDemo {
     private static void task1() throws InterruptedException {
         calledTask1++;
         Thread.sleep(4);
-        System.currentTimeMillis();
     }
 
     private static void task2() throws InterruptedException {
