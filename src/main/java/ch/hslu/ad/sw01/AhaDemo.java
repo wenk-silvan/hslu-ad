@@ -49,7 +49,7 @@ class AhaDemo {
      */
     private static void task1() throws InterruptedException {
         calledTask1++;
-        Thread.sleep(4);
+        Thread.sleep(5);
     }
 
     /**
@@ -58,7 +58,7 @@ class AhaDemo {
      */
     private static void task2() throws InterruptedException {
         calledTask2++;
-        Thread.sleep(3);
+        Thread.sleep(5);
     }
 
     /**
@@ -67,6 +67,6 @@ class AhaDemo {
      */
     private static void task3() throws InterruptedException {
         calledTask3++;
-        Thread.sleep(2);
+        Thread.sleep(5);
     }
 }

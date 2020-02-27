@@ -11,6 +11,14 @@ public final class Allocation implements Comparable {
         this.startAddress = address;
     }
 
+    public int getBlockSize() {
+        return this.blockSize;
+    }
+
+    public int getStartAddress() {
+        return this.startAddress;
+    }
+
     /**
      * Checks if given object equals this.
      * @param o the object to compare.
