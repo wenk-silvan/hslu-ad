@@ -30,13 +30,13 @@ class AllocationListTest {
 
     @Test
     void testCount() {
-        var length = this.list.count();
+        var length = this.list.size();
         assertEquals(5, length);
     }
 
     @Test
     void testCountWrong() {
-        var length = this.list.count();
+        var length = this.list.size();
         assertThat(length).isNotEqualTo(4);
     }
 
@@ -44,7 +44,7 @@ class AllocationListTest {
     void testAddSingle() {
         var a = new Allocation(5, 15);
         this.list.add(a);
-        assertEquals(6, this.list.count());
+        assertEquals(6, this.list.size());
         assertEquals(15, this.list.getHead().get().getStartAddress());
     }
 
@@ -54,8 +54,8 @@ class AllocationListTest {
         var a2 = new Allocation(5, 16);
         var a3 = new Allocation(5, 17);
         var allocations = Arrays.asList(a1, a2, a3);
-        this.list.add(allocations);
-        assertEquals(8, this.list.count());
+        this.list.addAll(allocations);
+        assertEquals(8, this.list.size());
         assertEquals(17, this.list.getHead().get().getStartAddress());
     }
 
@@ -103,5 +103,13 @@ class AllocationListTest {
         var a = new Allocation(5, 20);
         var result = this.list.contains(a);
         assertFalse(result);
+    }
+
+    @Test
+    void testPoll() {
+        var a5 = new Allocation(4, 14);
+        var head = this.list.poll();
+        assertEquals(a5, head);
+        assertEquals(4, this.list.size());
     }
 }

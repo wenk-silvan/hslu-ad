@@ -2,6 +2,9 @@ package ch.hslu.ad.sw02;
 
 import ch.hslu.ad.sw01.Allocation;
 
+import java.io.InvalidClassException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,24 +17,29 @@ public class AllocationList {
         this.head = new AllocationNode(a, old);
     }
 
-    void add(List<Allocation> allocations) {
+    void addAll(List<Allocation> allocations) {
         for (Allocation a : allocations) {
             this.add(a);
         }
     }
 
-    boolean contains(Allocation a) {
+    boolean contains(Object o) {
+        if (o.getClass() != Allocation.class) {
+            return false;
+        }
+        var a = (Allocation) o;
         return this.contains(this.head, a);
-    }
-
-    int count() {
-        if (head == null) return 0;
-        this.iterate(head);
-        return count;
     }
 
     AllocationNode getHead() {
         return this.head;
+    }
+
+    Allocation poll() {
+        Allocation head = this.head.get();
+        this.remove(0);
+        this.getAndResetCount();
+        return head;
     }
 
     int remove(int index) {
@@ -39,7 +47,13 @@ public class AllocationList {
             return 0;
         }
         this.iterate(this.head, index);
-        return this.count;
+        return this.getAndResetCount();
+    }
+
+    int size() {
+        if (head == null) return 0;
+        this.iterate(head);
+        return count;
     }
 
     private boolean contains(AllocationNode node, Allocation a) {
@@ -52,10 +66,21 @@ public class AllocationList {
         return false;
     }
 
+    private int getAndResetCount() {
+        var count = this.count;
+        this.count = 1;
+        return count;
+    }
+
     private void iterate(AllocationNode node) {
         this.iterate(node, -1);
     }
 
+    /**
+     * Iterates through the linked list, counts the list and removes item at index, if higher than -1.
+     * @param node
+     * @param index
+     */
     private void iterate(AllocationNode node, int index) {
         if (index == 0) {
             this.head = null;
