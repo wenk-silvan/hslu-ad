@@ -14,6 +14,7 @@ public class AhaDemoTest {
         assertEquals(AhaDemo.calledTask2, 3);
         assertEquals(AhaDemo.calledTask3, 2);
     }
+
     @Test
     void testTaskShort() throws InterruptedException {
         var count = 5;
@@ -23,6 +24,7 @@ public class AhaDemoTest {
         assertEquals(AhaDemo.calledTask2, 15);
         assertEquals(AhaDemo.calledTask3, 50);
     }
+
     @Test
     void testTaskLong() throws InterruptedException {
         var count = 30;

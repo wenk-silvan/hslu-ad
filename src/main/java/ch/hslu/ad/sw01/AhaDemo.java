@@ -12,6 +12,11 @@ class AhaDemo {
     static int calledTask3 = 0;
     private static long durationInMilliseconds = 0;
 
+    /**
+     * Starts task1 4 times, task2 n * 3 times and task3 n^2 * 2 times.
+     * @param n the multiplicator
+     * @throws InterruptedException
+     */
     static void task(final int n) throws InterruptedException {
         durationInMilliseconds = System.currentTimeMillis();
         task1(); task1(); task1(); task1();
@@ -28,6 +33,9 @@ class AhaDemo {
                 System.currentTimeMillis() - durationInMilliseconds);
     }
 
+    /**
+     * Reset value of all member and class variables.
+     */
     static void reset() {
         calledTask1 = 0;
         calledTask2 = 0;
@@ -35,16 +43,28 @@ class AhaDemo {
         durationInMilliseconds = 0;
     }
 
+    /**
+     * Execute task 1
+     * @throws InterruptedException
+     */
     private static void task1() throws InterruptedException {
         calledTask1++;
         Thread.sleep(4);
     }
 
+    /**
+     * Execute task 2
+     * @throws InterruptedException
+     */
     private static void task2() throws InterruptedException {
         calledTask2++;
         Thread.sleep(3);
     }
 
+    /**
+     * Execute task 3
+     * @throws InterruptedException
+     */
     private static void task3() throws InterruptedException {
         calledTask3++;
         Thread.sleep(2);
