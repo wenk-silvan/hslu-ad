@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AllocationListTest {
     private AllocationList list;
@@ -90,5 +89,19 @@ class AllocationListTest {
     void testRemoveIndexOutOfBounds() {
         var length = this.list.remove(8);
         assertEquals(5, length);
+    }
+
+    @Test
+    void testContains() {
+        var a = new Allocation(3, 12);
+        var result = this.list.contains(a);
+        assertTrue(result);
+    }
+
+    @Test
+    void testContainsNot() {
+        var a = new Allocation(5, 20);
+        var result = this.list.contains(a);
+        assertFalse(result);
     }
 }

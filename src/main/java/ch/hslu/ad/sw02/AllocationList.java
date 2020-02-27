@@ -3,15 +3,53 @@ package ch.hslu.ad.sw02;
 import ch.hslu.ad.sw01.Allocation;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AllocationList {
     private AllocationNode head;
     private int count = 1;
 
-    public int count() {
+    void add(Allocation a) {
+        var old = this.head;
+        this.head = new AllocationNode(a, old);
+    }
+
+    void add(List<Allocation> allocations) {
+        for (Allocation a : allocations) {
+            this.add(a);
+        }
+    }
+
+    boolean contains(Allocation a) {
+        return this.contains(this.head, a);
+    }
+
+    int count() {
         if (head == null) return 0;
         this.iterate(head);
         return count;
+    }
+
+    AllocationNode getHead() {
+        return this.head;
+    }
+
+    int remove(int index) {
+        if (this.head == null) {
+            return 0;
+        }
+        this.iterate(this.head, index);
+        return this.count;
+    }
+
+    private boolean contains(AllocationNode node, Allocation a) {
+        if (node.get().equals(a)) {
+            return true;
+        }
+        else if (node.hasNext()) {
+            return this.contains(node.next(), a);
+        }
+        return false;
     }
 
     private void iterate(AllocationNode node) {
@@ -44,29 +82,6 @@ public class AllocationList {
             this.count++;
             this.iterate(node.next(), index);
         }
-    }
-
-    void add(Allocation a) {
-        var old = this.head;
-        this.head = new AllocationNode(a, old);
-    }
-
-    void add(List<Allocation> allocations) {
-        for (Allocation a : allocations) {
-            this.add(a);
-        }
-    }
-
-    int remove(int index) {
-        if (this.head == null) {
-            return 0;
-        }
-        this.iterate(this.head, index);
-        return this.count;
-    }
-
-    AllocationNode getHead() {
-        return this.head;
     }
 
     private boolean nextItemToBeRemoved(int index) {
