@@ -3,6 +3,9 @@ package ch.hslu.ad.sw02;
 import ch.hslu.ad.sw01.Allocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,6 +36,31 @@ class AllocationListTest {
     }
 
     @Test
+    void testCountWrong() {
+        var length = this.list.count();
+        assertThat(length).isNotEqualTo(4);
+    }
+
+    @Test
+    void testAddSingle() {
+        var a = new Allocation(5, 15);
+        this.list.add(a);
+        assertEquals(6, this.list.count());
+        assertEquals(15, this.list.getHead().get().getStartAddress());
+    }
+
+    @Test
+    void testAddMultiple() {
+        var a1 = new Allocation(5, 15);
+        var a2 = new Allocation(5, 16);
+        var a3 = new Allocation(5, 17);
+        var allocations = Arrays.asList(a1, a2, a3);
+        this.list.add(allocations);
+        assertEquals(8, this.list.count());
+        assertEquals(17, this.list.getHead().get().getStartAddress());
+    }
+
+    @Test
     void testRemoveHead() {
         var length = this.list.remove(0);
         assertEquals(4, length);
@@ -52,8 +80,15 @@ class AllocationListTest {
     }
 
     @Test
-    void testCountWrong() {
-        var length = this.list.count();
-        assertThat(length).isNotEqualTo(4);
+    void testRemoveFromEmpty() {
+        var emptyList = new AllocationList();
+        var length = emptyList.remove(2);
+        assertEquals(0, length);
+    }
+
+    @Test
+    void testRemoveIndexOutOfBounds() {
+        var length = this.list.remove(8);
+        assertEquals(5, length);
     }
 }

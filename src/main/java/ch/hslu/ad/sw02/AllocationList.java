@@ -2,6 +2,8 @@ package ch.hslu.ad.sw02;
 
 import ch.hslu.ad.sw01.Allocation;
 
+import java.util.List;
+
 public class AllocationList {
     private AllocationNode head;
     private int count = 1;
@@ -49,7 +51,16 @@ public class AllocationList {
         this.head = new AllocationNode(a, old);
     }
 
+    void add(List<Allocation> allocations) {
+        for (Allocation a : allocations) {
+            this.add(a);
+        }
+    }
+
     int remove(int index) {
+        if (this.head == null) {
+            return 0;
+        }
         this.iterate(this.head, index);
         return this.count;
     }

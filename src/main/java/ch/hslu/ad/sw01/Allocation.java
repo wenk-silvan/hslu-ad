@@ -6,9 +6,9 @@ public final class Allocation implements Comparable {
     private final int blockSize;
     private final int startAddress;
 
-    public Allocation(int blockSize, int address) {
+    public Allocation(int blockSize, int startAddress) {
         this.blockSize = blockSize;
-        this.startAddress = address;
+        this.startAddress = startAddress;
     }
 
     public int getBlockSize() {
