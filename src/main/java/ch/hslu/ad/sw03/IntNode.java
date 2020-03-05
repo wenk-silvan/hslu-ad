@@ -1,6 +1,6 @@
 package ch.hslu.ad.sw03;
 
-public class IntNode<Integer> implements Comparable, Node {
+public class IntNode implements Node {
     private Node left;
     private Node right;
     private Integer value;
@@ -11,19 +11,19 @@ public class IntNode<Integer> implements Comparable, Node {
         this.value = value;
     }
 
-    public boolean hasLeft() {
+    boolean hasLeft() {
         return this.left != null;
     }
 
-    public boolean hasRight() {
+    boolean hasRight() {
         return this.right != null;
     }
 
-    public Node left() {
+    Node left() {
         return this.left;
     }
 
-    public Node right() {
+    Node right() {
         return this.right;
     }
 
@@ -31,8 +31,16 @@ public class IntNode<Integer> implements Comparable, Node {
         return this.value;
     }
 
+    void setLeft(Node node) {
+        this.left = node;
+    }
+
+    void setRight(Node node) {
+        this.right = node;
+    }
+
     @Override
-    public int compareTo(Object o) {
-        return 0;
+    public String toString() {
+        return String.format("Node[value: %s]", this.get());
     }
 }

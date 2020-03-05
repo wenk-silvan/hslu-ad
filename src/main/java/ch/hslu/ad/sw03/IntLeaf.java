@@ -1,9 +1,9 @@
 package ch.hslu.ad.sw03;
 
-public class IntLeaf<Integer> implements Comparable, Node {
-    private Integer value;
+public class IntLeaf implements Comparable, Node {
+    private int value;
 
-    IntLeaf(Integer value) {
+    IntLeaf(int value) {
         this.value = value;
     }
 
@@ -14,5 +14,10 @@ public class IntLeaf<Integer> implements Comparable, Node {
     @Override
     public int compareTo(Object o) {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Node[value: %s]", this.get());
     }
 }
