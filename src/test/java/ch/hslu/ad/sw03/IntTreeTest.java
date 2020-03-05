@@ -19,7 +19,7 @@ class IntTreeTest {
     }
 
     @Test
-    void testSearchNode() throws TreeException {
+    void testSearchNode() {
         var tree = new IntTree(this.root);
         var expected = 8;
         var node = tree.search(expected);
@@ -28,7 +28,7 @@ class IntTreeTest {
     }
 
     @Test
-    void testSearchLeaf() throws TreeException {
+    void testSearchLeaf() {
         var tree = new IntTree(this.root);
         var expected = 7;
         var node = tree.search(expected);
@@ -37,7 +37,7 @@ class IntTreeTest {
     }
 
     @Test
-    void testSearchRoot() throws TreeException {
+    void testSearchRoot() {
         var tree = new IntTree(this.root);
         var expected = 6;
         var node = tree.search(expected);
@@ -58,7 +58,7 @@ class IntTreeTest {
     }
 
     @Test
-    void testAddLeaf() throws TreeException {
+    void testAddLeaf() {
         var tree = new IntTree(this.root);
         var expected = new IntLeaf(11);
         tree.add(expected);
@@ -67,12 +67,24 @@ class IntTreeTest {
     }
 
     @Test
-    void testAddNode() throws TreeException {
+    void testAddNode() {
         var tree = new IntTree(this.root);
         var expected = new IntNode(new IntLeaf(12), null, 11);
         tree.add(expected);
         var actual = tree.search(11);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testTraverseInorder() {
+        var tree = new IntTree();
+        tree.traverseInorder(this.root);
+    }
+
+    @Test
+    void testTraversePostorder() {
+        var tree = new IntTree();
+        tree.traversePostorder(this.root);
     }
 
     @Test

@@ -4,21 +4,25 @@ import ch.hslu.demo.DemoApp;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class IntTree implements Tree {
     private IntNode root;
     private static final Logger LOGGER = LogManager.getLogger(DemoApp.class);
+
+    IntTree() {
+        this.root = new IntNode(null, null, null);
+    }
 
     IntTree(IntNode node) {
         this.root = node;
     }
 
+    /**
+     * Preorder search for node with specified value.
+     * @param value Integer value.
+     * @return the found node. Null, if none was found.
+     */
     @Override
-    public Node search(Object value) throws TreeException {
+    public Node search(Object value) {
         try {
             var intValue = (int) value;
             return this.findNode(this.root, intValue);
@@ -29,7 +33,7 @@ public class IntTree implements Tree {
     }
 
     @Override
-    public void add(Node node) throws TreeException {
+    public void add(Node node) {
         this.addNode(this.root, node);
     }
 
@@ -43,20 +47,37 @@ public class IntTree implements Tree {
 
     }
 
-    /*public Node traverse(Node node) {
+    void traverseInorder(Node node) {
         if (node instanceof IntLeaf) {
             LOGGER.info(String.format("Traverse: %s", node.toString()));
-            return null;
+            return;
         }
         var inner = (IntNode) node;
-        Node left = inner.hasLeft() ? this.traverse(inner.left()) : null;
-        if (left != null) {
-            return left;
+        if (inner.hasLeft()) {
+            this.traverseInorder(inner.left());
         }
-        return inner.hasRight() ? this.findNode(inner.right(), value) : null;
-    }*/
+        LOGGER.info(String.format("Traverse: %s", node.toString()));
+        if (inner.hasRight()) {
+            this.traverseInorder(inner.right());
+        }
+    }
 
-    private Node findNode(Node node, int value) throws TreeException {
+    void traversePostorder(Node node) {
+        if (node instanceof IntLeaf) {
+            LOGGER.info(String.format("Traverse: %s", node.toString()));
+            return;
+        }
+        var inner = (IntNode) node;
+        if (inner.hasLeft()) {
+            this.traversePostorder(inner.left());
+        }
+        if (inner.hasRight()) {
+            this.traversePostorder(inner.right());
+        }
+        LOGGER.info(String.format("Traverse: %s", node.toString()));
+    }
+
+    private Node findNode(Node node, int value) {
         if ((int) node.get() == value) {
             LOGGER.info(String.format("FOUND: %s", node.toString()));
             return node;
@@ -80,7 +101,7 @@ public class IntTree implements Tree {
         return inner.hasRight() ? this.findNode(inner.right(), value) : null;
     }
 
-    private void addNode(Node node, Node newNode) throws TreeException {
+    private void addNode(Node node, Node newNode) {
         var value = (int) node.get();
         var newValue = (int) newNode.get();
         LOGGER.info(String.format("FIND PLACE: Current: %s New: %s", node.toString(), newNode.toString()));
