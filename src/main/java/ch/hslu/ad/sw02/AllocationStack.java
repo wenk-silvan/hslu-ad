@@ -25,7 +25,7 @@ public class AllocationStack {
      * @param a The allocation to push.
      * @return -1 if push failed, 1 if successful.
      */
-    int push(Allocation a) {
+    public int push(Allocation a) {
         for(int i = this.allocations.length - 1; i >= 0; i--) {
             if (this.allocations[i] != null) {
                 if (i == this.allocations.length - 1) {
@@ -61,7 +61,7 @@ public class AllocationStack {
      * Returns the length of the stack.
      * @return The length.
      */
-    int size() {
+    public int size() {
         return this.allocations.length;
     }
 }
