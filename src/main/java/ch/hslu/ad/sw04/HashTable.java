@@ -5,5 +5,5 @@ import java.util.ArrayList;
 public interface HashTable<T> {
     public boolean add(T element);
     public boolean remove(T element);
-    public T get(int index);
+    public T get(T element);
 }
