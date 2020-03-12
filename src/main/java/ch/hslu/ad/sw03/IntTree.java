@@ -39,12 +39,14 @@ public class IntTree implements Tree {
 
     @Override
     public IntNode getRoot() {
-        return null;
+        return this.root;
     }
 
     @Override
-    public void remove() {
-
+    public void remove(Node node) {
+        if (node instanceof IntLeaf) {
+            this.removeLeaf((IntLeaf) node);
+        }
     }
 
     void traverseInorder(Node node) {
@@ -128,5 +130,9 @@ public class IntTree implements Tree {
             return;
         }
         this.addNode(intNode.right(), newNode);
+    }
+
+    private void removeLeaf(IntLeaf leaf) {
+
     }
 }

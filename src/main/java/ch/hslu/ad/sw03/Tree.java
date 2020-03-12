@@ -7,5 +7,5 @@ public interface Tree<T> {
 
     public Node getRoot();
 
-    public void remove();
+    public void remove(Node node);
 }
