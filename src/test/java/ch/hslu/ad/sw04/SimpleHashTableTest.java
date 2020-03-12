@@ -17,18 +17,16 @@ class SimpleHashTableTest {
     }
 
     @Test
-    void testAddIntegerTwice() {
+    void testAddDuplicate() {
         var expected = 3;
         var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
         var resultAdd1 = hashTable.add(expected);
         var resultAdd2 = hashTable.add(expected);
-        var actual1 = hashTable.getByIndex(expected);
-        var actual2 = hashTable.getByIndex(expected + 1);
+        var actual = hashTable.getByIndex(expected);
 
         assertTrue(resultAdd1);
-        assertTrue(resultAdd2);
-        assertEquals(expected, actual1);
-        assertEquals(expected, actual2);
+        assertFalse(resultAdd2);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -72,38 +70,31 @@ class SimpleHashTableTest {
     }
 
     @Test
-    void testAddFillIntegerWithDuplicates() {
+    void testAddFillIntegerWithCollision() {
         var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
         hashTable.add(1);
         hashTable.add(5);
         hashTable.add(9);
-        hashTable.add(9);
+        hashTable.add(19);
         hashTable.add(3);
         hashTable.add(8);
-        hashTable.add(3);
+        hashTable.add(13);
         hashTable.add(4);
         hashTable.add(6);
-        hashTable.add(1);
+        hashTable.add(11);
         var result = hashTable.add(0);
 
         assertFalse(result);
-        assertEquals(9, hashTable.getByIndex(0));
+        assertEquals(19, hashTable.getByIndex(0));
         assertEquals(1, hashTable.getByIndex(1));
-        assertEquals(1, hashTable.getByIndex(2));
+        assertEquals(11, hashTable.getByIndex(2));
         assertEquals(3, hashTable.getByIndex(3));
-        assertEquals(3, hashTable.getByIndex(4));
+        assertEquals(13, hashTable.getByIndex(4));
         assertEquals(5, hashTable.getByIndex(5));
         assertEquals(4, hashTable.getByIndex(6));
         assertEquals(6, hashTable.getByIndex(7));
         assertEquals(8, hashTable.getByIndex(8));
         assertEquals(9, hashTable.getByIndex(9));
-    }
-
-    @Test
-    void testAddIndexOutOfBounds() {
-        var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
-        var index = 10;
-        assertThrows(IndexOutOfBoundsException.class, () -> hashTable.add(index));
     }
 
     @Test
@@ -116,11 +107,11 @@ class SimpleHashTableTest {
     }
 
     @Test
-    void testGetIntegerWithDuplicates() {
+    void testGetIntegerWithCollision() {
         var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
         hashTable.add(1);
         hashTable.add(9);
-        hashTable.add(9);
+        hashTable.add(19);
         hashTable.add(0);
         var expected = hashTable.getByIndex(2);
         var actual = hashTable.get(0);
@@ -166,18 +157,33 @@ class SimpleHashTableTest {
     }
 
     @Test
-    void testRemoveIntegerWithDuplicates() {
+    void testRemoveIntegerTwiceWithCollision() {
+        var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
+        hashTable.add(3);
+        hashTable.add(13);
+        var beforeRemoval = hashTable.getByIndex(3);
+        hashTable.remove(3);
+        var afterRemoval = hashTable.getByIndex(3);
+        var secondRemoval = hashTable.remove(13);
+
+        assertEquals(3, beforeRemoval);
+        assertEquals(afterRemoval, TOMBSTONE);
+        assertTrue(secondRemoval);
+    }
+
+    @Test
+    void testRemoveIntegerWithCollision() {
         var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
         hashTable.add(1);
         hashTable.add(5);
         hashTable.add(9);
-        hashTable.add(9);
+        hashTable.add(19);
         hashTable.remove(1);
-        hashTable.add(9);
+        hashTable.add(29);
 
-        assertEquals(9, hashTable.getByIndex(0));
+        assertEquals(19, hashTable.getByIndex(0));
         assertEquals(-1, hashTable.getByIndex(1));
-        assertEquals(9, hashTable.getByIndex(2));
+        assertEquals(29, hashTable.getByIndex(2));
         assertEquals(5, hashTable.getByIndex(5));
         assertEquals(9, hashTable.getByIndex(9));
     }
@@ -193,14 +199,7 @@ class SimpleHashTableTest {
         var tombstone = hashTable.getByIndex(3);
 
         assertTrue(result);
-        assertEquals(TOMBSTONE, TOMBSTONE);
-    }
-
-    @Test
-    void testRemoveIndexOutOfBounds() {
-        var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
-        var index = 10;
-        assertThrows(IndexOutOfBoundsException.class, () -> hashTable.remove(index));
+        assertEquals(TOMBSTONE, tombstone);
     }
 
     @Test

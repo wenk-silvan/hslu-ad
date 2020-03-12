@@ -80,6 +80,36 @@ class AllocationHelperTest {
                 LARGE,
                 System.currentTimeMillis() - timeBeforeCreation)
         );
+
+        timeBeforeCreation = System.currentTimeMillis();
+        stack = AllocationHelper.toJavaStack(allocations);
+        LOGGER.info(String.format("Copy array with %s items to Java Stack took %s milliseconds.",
+                LARGE,
+                System.currentTimeMillis() - timeBeforeCreation)
+        );
+
+
+        timeBeforeCreation = System.currentTimeMillis();
+        stack = AllocationHelper.toJavaStack(allocations);
+        LOGGER.info(String.format("Copy array with %s items to Java Stack took %s milliseconds.",
+                LARGE,
+                System.currentTimeMillis() - timeBeforeCreation)
+        );
+
+        timeBeforeCreation = System.currentTimeMillis();
+        stack = AllocationHelper.toJavaStack(allocations);
+        LOGGER.info(String.format("Copy array with %s items to Java Stack took %s milliseconds.",
+                LARGE,
+                System.currentTimeMillis() - timeBeforeCreation)
+        );
+
+        timeBeforeCreation = System.currentTimeMillis();
+        stack = AllocationHelper.toJavaStack(allocations);
+        LOGGER.info(String.format("Copy array with %s items to Java Stack took %s milliseconds.",
+                LARGE,
+                System.currentTimeMillis() - timeBeforeCreation)
+        );
+
         assertEquals(LARGE, stack.size());
     }
 

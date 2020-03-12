@@ -13,16 +13,16 @@ public final class SimpleHashTable<T> implements HashTable<T> {
     private final T tombstone;
 
     SimpleHashTable(T tombstone) {
-        this.table = (T[]) new Integer[10];
+        this.table = (T[]) new Object[10];
         this.tombstone = tombstone;
     }
 
     @Override
     public boolean add(T element) {
-        if (this.isFull()) {
+        if (this.isFull() || this.isDuplicate(element)) {
             return false;
         }
-        var hash = Objects.hashCode(element);
+        var hash = this.getPosition(element);
         if (this.table[hash] != null) {
             var index = (hash == 9) ? 0 : hash + 1;
             while(this.table[index] != null) {
@@ -39,7 +39,7 @@ public final class SimpleHashTable<T> implements HashTable<T> {
 
     @Override
     public boolean remove(T element) {
-        var hash = Objects.hashCode(element);
+        var hash = this.getPosition(element);
         if (this.table[hash] == null) {
             return false;
         }
@@ -68,7 +68,7 @@ public final class SimpleHashTable<T> implements HashTable<T> {
 
     @Override
     public T get(T element) {
-        var hash = Objects.hashCode(element);
+        var hash = this.getPosition(element);
         var index = hash;
         if (this.table[hash] != null) {
             if (this.table[hash].equals(element)) {
@@ -121,5 +121,9 @@ public final class SimpleHashTable<T> implements HashTable<T> {
             }
         }
         return true;
+    }
+
+    private int getPosition(T element) {
+        return element.hashCode() % 10;
     }
 }

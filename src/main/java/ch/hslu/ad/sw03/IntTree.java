@@ -133,6 +133,5 @@ public class IntTree implements Tree {
     }
 
     private void removeLeaf(IntLeaf leaf) {
-
     }
 }
