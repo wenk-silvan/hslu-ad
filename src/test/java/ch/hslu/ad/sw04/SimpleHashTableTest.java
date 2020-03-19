@@ -70,7 +70,7 @@ class SimpleHashTableTest {
     }
 
     @Test
-    void testAddFillIntegerWithCollision() {
+    void testAddFillInteegerWithCollision() {
         var hashTable = new SimpleHashTable<Integer>(TOMBSTONE);
         hashTable.add(1);
         hashTable.add(5);
