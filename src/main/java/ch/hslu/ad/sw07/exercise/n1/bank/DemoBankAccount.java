@@ -53,7 +53,7 @@ public final class DemoBankAccount {
     public static void main(String[] args) throws InterruptedException {
         final ArrayList<BankAccount> source = new ArrayList<>();
         final ArrayList<BankAccount> target = new ArrayList<>();
-        final int amount = 100000;
+        final int amount = 10000;
         final int number = 5;
         for (int i = 0; i < number; i++) {
             source.add(new BankAccount(amount));
