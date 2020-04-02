@@ -19,7 +19,6 @@ public class AdditionTask implements Runnable {
         this.duration = duration;
     }
 
-
     public void stopRequest() {
         this.isStopped = true;
         if (this.thread != null) {
