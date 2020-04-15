@@ -67,7 +67,7 @@ public final class BankAccount {
     public void transfer(final BankAccount target, final int amount) {
         synchronized (this) {
             this.balance -= amount;
-            target.deposite(amount);
         }
+        target.deposite(amount);
     }
 }
