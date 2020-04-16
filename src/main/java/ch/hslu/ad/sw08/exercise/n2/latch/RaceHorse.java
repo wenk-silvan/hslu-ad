@@ -50,7 +50,6 @@ public final class RaceHorse implements Runnable {
         } catch (InterruptedException ex) {
             LOG.info("Rennpferd " + runThread.getName() + " bricht das Rennen ab.");
             return;
-            //LOG.debug(ex);
         }
         LOG.info("Rennpferd " + runThread.getName() + " ist im Ziel.");
     }
