@@ -28,6 +28,8 @@ import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static ch.hslu.ad.helper.Timer.stopWatch;
+
 /**
  * 100 grosse Primzahlen produzieren.
  */
@@ -39,6 +41,21 @@ public final class PrimeCheck {
      * Privater Konstruktor.
      */
     public PrimeCheck() {
+    }
+
+    /**
+     * Main-Demo.
+     *
+     * @param args not used.
+     */
+    public static void main(String[] args) {
+        int count = 100;
+        int certainty = Integer.MAX_VALUE;
+
+        //stopWatch(j -> getPrimesSequentially(count, certainty));
+        //stopWatch(j -> getSinglePrimesParallel(100, certainty));
+        stopWatch(LOG, j -> getManyPrimesParallel(count / 4, 4, certainty));
+        stopWatch(LOG, j -> getManyPrimesParallel(count / 10, 10, certainty));
     }
 
     /**
@@ -72,10 +89,11 @@ public final class PrimeCheck {
                 final var prime = futures.get(i).get();
                 LOG.info(getMessage(i, prime));
             }
-            executor.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
             LOG.error(ex.getMessage());
             ex.printStackTrace();
+        } finally {
+            executor.shutdown();
         }
     }
 
@@ -100,10 +118,11 @@ public final class PrimeCheck {
                 }
 
             }
-            executor.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
             LOG.error(ex.getMessage());
             ex.printStackTrace();
+        } finally {
+            executor.shutdown();
         }
     }
 
@@ -115,32 +134,5 @@ public final class PrimeCheck {
      */
     private static String getMessage(int index, BigInteger prime) {
         return String.format("%s: %s...", index + 1, prime.toString().substring(0, 20));
-    }
-
-    /**
-     * Executes the given method and logs it's duration time.
-     * @param function The method to execute.
-     */
-    private static void stopWatch(IntConsumer function) {
-        var startingTime = System.currentTimeMillis();
-        function.accept(1);
-        var duration = System.currentTimeMillis() - startingTime;
-        LOG.info(String.format("The execution took %s s and %s ms.", duration / 1000, duration % 1000));
-        LOG.info("\n");
-    }
-
-    /**
-     * Main-Demo.
-     *
-     * @param args not used.
-     */
-    public static void main(String[] args) {
-        int count = 100;
-        int certainty = Integer.MAX_VALUE;
-
-        //stopWatch(j -> getPrimesSequentially(count, certainty));
-        stopWatch(j -> getSinglePrimesParallel(100, certainty));
-        stopWatch(j -> getManyPrimesParallel(count / 4, 4, certainty));
-        stopWatch(j -> getManyPrimesParallel(count / 10, 10, certainty));
     }
 }

@@ -42,8 +42,9 @@ public final class SpeedCount {
 
     /**
      * Test für einen Counter.
-     * @param counter Zählertyp.
-     * @param number Anzahl Zähl-Vorgänge.
+     *
+     * @param counter        Zählertyp.
+     * @param number         Anzahl Zähl-Vorgänge.
      * @param countOfThreads Anzahl Tester-Threads.
      * @return Dauer des Tests in mSec.
      */
@@ -74,6 +75,7 @@ public final class SpeedCount {
 
     /**
      * Führt den Speedtest für mit dem gegebenen Counter aus.
+     *
      * @param counter Der auszuführende Zähler.
      */
     private static void speedTestExecutor(Counter counter) {
@@ -90,6 +92,7 @@ public final class SpeedCount {
 
     /**
      * Main-Counter-Test.
+     *
      * @param args not used.
      */
     public static void main(final String args[]) {
