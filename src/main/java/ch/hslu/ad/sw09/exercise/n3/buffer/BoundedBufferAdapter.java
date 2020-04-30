@@ -139,18 +139,19 @@ public class BoundedBufferAdapter<T> {
 
 class Demo {
     private static final Logger LOG = LogManager.getLogger(Demo.class);
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final BoundedBufferAdapter<Integer> queue = new BoundedBufferAdapter<>(50);
         final ExecutorService executor = Executors.newCachedThreadPool();
-        final Producer p = new Producer(queue, 50);
+        final Producer p1 = new Producer(queue, 50);
+        final Producer p2 = new Producer(queue, 50);
         final Consumer c1 = new Consumer(queue);
-        final Consumer c2 = new Consumer(queue);
-        executor.submit(p);
-        executor.submit(c2);
+        executor.submit(p1);
+        executor.submit(p2);
         executor.submit(c1);
-        LOG.info("Consumer 1: " + c1.getSum());
-        LOG.info("Consumer 2: " + c2.getSum());
-        LOG.info("Producer 1: " + p.getSum());
         executor.shutdown();
+        Thread.sleep(50);
+        LOG.info("Producer 1: " + p1.getSum());
+        LOG.info("Producer 2: " + p2.getSum());
+        LOG.info("Consumer 1: " + c1.getSum());
     }
 }

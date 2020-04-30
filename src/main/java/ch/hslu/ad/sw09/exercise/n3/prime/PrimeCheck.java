@@ -51,11 +51,9 @@ public final class PrimeCheck {
     public static void main(String[] args) {
         int count = 100;
         int certainty = Integer.MAX_VALUE;
-
-        //stopWatch(j -> getPrimesSequentially(count, certainty));
-        //stopWatch(j -> getSinglePrimesParallel(100, certainty));
-        stopWatch(LOG, j -> getManyPrimesParallel(count / 4, 4, certainty));
-        stopWatch(LOG, j -> getManyPrimesParallel(count / 10, 10, certainty));
+        //stopWatch(LOG, j -> getPrimesSequentially(count, certainty));
+        stopWatch(LOG, j -> getManyPrimesParallel(4, 25, certainty));
+        stopWatch(LOG, j -> getManyPrimesParallel(10, 10, certainty));
     }
 
     /**
@@ -104,7 +102,7 @@ public final class PrimeCheck {
      * @param certainty The certainty by which the found number should be a prime.
      */
     private static void getManyPrimesParallel(int countOfThreads, int primePerThread, int certainty) {
-        final var executor = Executors.newCachedThreadPool();
+        final var executor = Executors.newFixedThreadPool(countOfThreads);
         var futures = new ArrayList<Future<List<BigInteger>>>();
         IntStream
                 .rangeClosed(1, countOfThreads)

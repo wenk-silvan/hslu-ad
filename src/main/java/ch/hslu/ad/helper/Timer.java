@@ -18,6 +18,18 @@ public class Timer<T> {
     }
 
     /**
+     * Executes the given method and logs it's duration time.
+     * @param function The method to execute.
+     */
+    public static void stopWatchNano(final Logger log, IntConsumer function) {
+        var startingTime = System.nanoTime();
+        function.accept(1);
+        var duration = System.nanoTime() - startingTime;
+        log.info(String.format("The execution took %ss %sms %sus.", duration / 1_000_000_000, (duration % 1_000_000_000) / 1_000_000, duration % 1_000));
+        System.out.println("");
+    }
+
+    /**
      * Executes the given method, logs it's duration time and returns the value.
      * @param function The method to execute.
      */

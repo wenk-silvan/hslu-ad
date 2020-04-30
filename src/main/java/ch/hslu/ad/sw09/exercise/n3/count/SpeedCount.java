@@ -56,10 +56,9 @@ public final class SpeedCount {
         for (int i = 0; i < countOfThreads; i++) {
             futures.add(executor.submit(new CountTask(counter, number)));
         }
-        Iterator<Future<Integer>> iterator = futures.iterator();
-        while (iterator.hasNext()) {
+        for (Future<Integer> future : futures) {
             try {
-                if (iterator.next().get() == 0) {
+                if (future.get() == 0) {
                     counterCheck = true;
                 }
             } catch (InterruptedException | ExecutionException ex) {
@@ -79,7 +78,7 @@ public final class SpeedCount {
      * @param counter Der auszuführende Zähler.
      */
     private static void speedTestExecutor(Counter counter) {
-        final int number = 1000000;
+        final int number = 100_0000;
         final int rounds = 23;
         final int countOfThreads = 8;
 
