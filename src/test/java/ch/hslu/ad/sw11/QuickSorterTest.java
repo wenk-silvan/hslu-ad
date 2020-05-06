@@ -103,7 +103,7 @@ class QuickSorterTest {
 
     @Test
     void testQuickSortImprovedSmall() {
-        var randomCharArray = ArrayHelper.randomChars(100);
+        var randomCharArray = ArrayHelper.randomChars(5_000);
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
@@ -111,7 +111,7 @@ class QuickSorterTest {
 
     @Test
     void testQuickSortImprovedMedium() {
-        var randomCharArray = ArrayHelper.randomChars(10_000);
+        var randomCharArray = ArrayHelper.randomChars(100_000);
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
@@ -120,7 +120,7 @@ class QuickSorterTest {
 
     @Test
     void testQuickSortImprovedBig() {
-        var randomCharArray = ArrayHelper.randomChars(500_000);
+        var randomCharArray = ArrayHelper.randomChars(1_000_000);
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));
         Timer.stopWatchNano(LOGGER, f -> QuickSorter.quickSortSwitchSame(randomCharArray));

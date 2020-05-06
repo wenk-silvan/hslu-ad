@@ -69,8 +69,10 @@ class QuickSorter {
     }
 
     static char[] quickSortSwitchSame(final char[] arr) {
-        final int left = 0;
-        final int right = arr.length - 1;
+        return quickSortSwitchSame(arr, 0, arr.length - 1);
+    }
+
+    static char[] quickSortSwitchSame(final char[] arr, final int left, final int right) {
         int up = left;
         int down = right - 1;
         char separator = arr[right];
@@ -91,8 +93,8 @@ class QuickSorter {
             }
         } while (!allChecked);
         exchange(arr, up, right);
-        if (left < (up - 1)) quickSort(arr, left, (up - 1));
-        if ((up + 1) < right) quickSort(arr, (up + 1), right);
+        if (left < (up - 1)) quickSortSwitchSame(arr, left, (up - 1));
+        if ((up + 1) < right) quickSortSwitchSame(arr, (up + 1), right);
         return arr;
     }
 

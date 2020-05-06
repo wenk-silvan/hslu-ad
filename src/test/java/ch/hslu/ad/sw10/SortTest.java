@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SortTest {
     private static final Logger LOG = LogManager.getLogger(SortTest.class);
-    private final int[] shortArray = {3, 1, 5, 0, 19, -1, 4, 3};
-    private final int[] mediumArray = generateRandomArray(10000);
-    private final int[] longArray = generateRandomArray(100000);
+    private final int[] shortArray = generateRandomArray(50_000);
+    private final int[] mediumArray = generateRandomArray(100_000);
+    private final int[] longArray = generateRandomArray(200_000);
 
     @Test
     void testInsertionSortShort() {
