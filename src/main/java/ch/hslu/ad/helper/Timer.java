@@ -26,7 +26,6 @@ public class Timer<T> {
         function.accept(1);
         var duration = System.nanoTime() - startingTime;
         log.info(String.format("The execution took %ss %sms %sus.", duration / 1_000_000_000, (duration % 1_000_000_000) / 1_000_000, duration % 1_000));
-        System.out.println("");
     }
 
     /**
