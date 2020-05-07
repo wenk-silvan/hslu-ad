@@ -15,6 +15,7 @@
  */
 package ch.hslu.ad.sw12.exercise.n4.fibo;
 
+import java.util.Arrays;
 import java.util.concurrent.RecursiveTask;
 
 /**
@@ -23,7 +24,10 @@ import java.util.concurrent.RecursiveTask;
 @SuppressWarnings("serial")
 public final class FibonacciTask extends RecursiveTask<Long> {
 
+    private static final int THRESHOLD = 20;
     private final int n;
+    private final int max;
+    private final int min;
 
     /**
      * Erzeugt einen Fibonacci Task.
@@ -31,11 +35,26 @@ public final class FibonacciTask extends RecursiveTask<Long> {
      * @param n für die Fibonacci Berechnung.
      */
     public FibonacciTask(final int n) {
+        this(n, 0, n);
+    }
+
+    private FibonacciTask(final int n, final int min, final int max) {
         this.n = n;
+        this.min = min;
+        this.max = max;
     }
 
     @Override
     protected Long compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (n <= THRESHOLD) {
+            return DemoFibonacciCalc.fiboRecursive(n);
+        } else {
+            var prev1 = new FibonacciTask(n - 1);
+            prev1.fork();
+            var prev2 = new FibonacciTask(n - 2);
+            final Long sumRight = prev2.invoke();
+            final Long sumLeft = prev1.join();
+            return sumLeft + sumRight;
+        }
     }
 }

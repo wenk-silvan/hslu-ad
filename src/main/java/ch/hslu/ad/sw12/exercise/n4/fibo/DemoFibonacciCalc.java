@@ -15,6 +15,7 @@
  */
 package ch.hslu.ad.sw12.exercise.n4.fibo;
 
+import ch.hslu.ad.helper.Timer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,15 +66,18 @@ public final class DemoFibonacciCalc {
     public static void main(final String[] args) {
         final int n = 42;
         final FibonacciTask task = new FibonacciTask(n);
-        LOG.info("fibo(" + n + ") start...");
-        long result = task.invoke();
-        LOG.info("Conc. recursive = " + result);
-        LOG.info("Conc. recursive : ? msec.");
-        result = fiboIterative(n);
-        LOG.info("Func. iterative = " + result);
-        LOG.info("Func. iterative : ? msec.");
-        result = fiboRecursive(n);
-        LOG.info("Func. recursive = " + result);
-        LOG.info("Func. recursive :  ? sec.");
+        LOG.info("fibo(" + n + ") start...\n");
+
+        LOG.info("Start concurrent fibonacci");
+        var result = (new Timer<Long>()).stopWatchNano(LOG, task::invoke);
+        LOG.info("Result = " + result + "\n");
+
+        LOG.info("Start iterative fibonacci");
+        result = (new Timer<Long>()).stopWatchNano(LOG, () -> fiboIterative(n));
+        LOG.info("Result = " + result + "\n");
+
+        LOG.info("Start recursive fibonacci");
+        result = (new Timer<Long>()).stopWatchNano(LOG, () -> fiboRecursive(n));
+        LOG.info("Result = " + result + "\n");
     }
 }
