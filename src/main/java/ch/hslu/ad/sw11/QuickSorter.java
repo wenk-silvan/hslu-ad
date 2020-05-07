@@ -3,14 +3,14 @@ package ch.hslu.ad.sw11;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class QuickSorter {
+public class QuickSorter {
     private static final Logger LOGGER = LogManager.getLogger(QuickSorter.class);
 
     static char[] quickSort(final char[] arr) {
         return quickSort(arr, 0, arr.length - 1);
     }
 
-    static int[] quickSort(final int[] arr) {
+    public static int[] quickSort(final int[] arr) {
         return quickSort(arr, 0, arr.length - 1);
     }
 
@@ -41,7 +41,7 @@ class QuickSorter {
         return arr;
     }
 
-    static int[] quickSort(final int[] arr, final int left, final int right) {
+    public static int[] quickSort(final int[] arr, final int left, final int right) {
         int up = left;
         int down = right - 1;
         int separator = arr[right];
@@ -110,11 +110,5 @@ class QuickSorter {
         temp = arr[firstIndex];
         arr[firstIndex] = arr[secondIndex];
         arr[secondIndex] = temp;
-    }
-
-    private static void log(char[] arr) {
-        var sb = new StringBuilder();
-        for (char c : arr) sb.append(c).append(",");
-        LOGGER.info(sb);
     }
 }

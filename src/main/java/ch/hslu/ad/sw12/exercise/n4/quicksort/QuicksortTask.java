@@ -45,6 +45,34 @@ public final class QuicksortTask extends RecursiveAction {
 
     @Override
     protected void compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int up = this.min;
+        int down = this.max - 1;
+        int separator = array[this.max];
+        boolean allChecked = false;
+        do {
+            while (array[up] < separator) {
+                up++;
+            }
+            while ((array[down] > separator) && (down > up)) {
+                down--;
+            }
+            if (down > up) {
+                exchange(array, up, down);
+                up++;
+                down--;
+            } else {
+                allChecked = true;
+            }
+        } while (!allChecked);
+        exchange(array, up, this.max);
+        if (this.min < (up - 1)) new QuicksortTask(array, this.min, (up - 1)).fork();
+        if ((up + 1) < this.max) new QuicksortTask(array, (up + 1), this.max).fork();
+    }
+
+    private static void exchange(final int[] arr, final int firstIndex, final int secondIndex) {
+        int temp;
+        temp = arr[firstIndex];
+        arr[firstIndex] = arr[secondIndex];
+        arr[secondIndex] = temp;
     }
 }

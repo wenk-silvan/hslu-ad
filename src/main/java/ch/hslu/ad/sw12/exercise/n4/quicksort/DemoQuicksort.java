@@ -15,10 +15,14 @@
  */
 package ch.hslu.ad.sw12.exercise.n4.quicksort;
 
+import ch.hslu.ad.helper.Timer;
+import ch.hslu.ad.sw11.QuickSorter;
 import ch.hslu.ad.sw12.exercise.n4.array.init.RandomInitTask;
 import ch.hslu.ad.sw12.exercise.n4.array.sum.SumTask;
+
 import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,39 +45,34 @@ public final class DemoQuicksort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 300_000_000;
+        final int size = 75_000_000;
         final int[] array = new int[size];
         final ForkJoinPool pool = new ForkJoinPool();
-        RandomInitTask initTask = new RandomInitTask(array, 100);
-        pool.invoke(initTask);
-        SumTask sumTask = new SumTask(array);
-        long result = pool.invoke(sumTask);
-        LOG.info("Init. Checksum : " + result);
-        final QuicksortTask sortTask = new QuicksortTask(array);
-        pool.invoke(sortTask);
-        LOG.info("QuicksortTask  : ? sec.");
-        sumTask = new SumTask(array);
-        result = pool.invoke(sumTask);
-        LOG.info("Conc. Checksum : " + result);
-        initTask = new RandomInitTask(array, 100);
-        pool.invoke(initTask);
-        sumTask = new SumTask(array);
-        result = pool.invoke(sumTask);
-        LOG.info("Init. Checksum : " + result);
-        QuicksortRecursive.quicksort(array);
-        LOG.info("QuicksortRec.  : ? sec.");
-        sumTask = new SumTask(array);
-        result = pool.invoke(sumTask);
-        LOG.info("Recu. Checksum : " + result);
-        initTask = new RandomInitTask(array, 100);
-        pool.invoke(initTask);
-        sumTask = new SumTask(array);
-        result = pool.invoke(sumTask);
-        LOG.info("Init. checksum : " + result);
-        Arrays.sort(array);
-        LOG.info("Arrays.sort    : ? sec.");
-        sumTask = new SumTask(array);
-        result = pool.invoke(sumTask);
-        LOG.info("Sort checksum  : " + result);
+
+        long initSum = initialize(array, pool);
+        LOG.info("Start Quicksort Concurrent.");
+        Timer.stopWatchNano(LOG, func -> pool.invoke(new QuicksortTask(array)));
+        long sortSum = pool.invoke(new SumTask(array));
+        LOG.info("Initialize Checksum : " + initSum);
+        LOG.info("Concurrent Checksum : " + sortSum + "\n");
+
+        initSum = initialize(array, pool);
+        LOG.info("Start Quicksort Recursive");
+        Timer.stopWatchNano(LOG, func -> QuicksortRecursive.quicksort(array));
+        sortSum = pool.invoke(new SumTask(array));
+        LOG.info("Initialize Checksum  : " + initSum);
+        LOG.info("Recursive Checksum   : " + sortSum + "\n");
+
+        initSum = initialize(array, pool);
+        LOG.info("Start Arrays.sort");
+        Timer.stopWatchNano(LOG, func -> Arrays.sort(array));
+        sortSum = pool.invoke(new SumTask(array));
+        LOG.info("Initialize checksum : " + initSum);
+        LOG.info("Sort checksum       : " + sortSum + "\n");
+    }
+
+    private static long initialize(int[] array, ForkJoinPool pool) {
+        pool.invoke(new RandomInitTask(array, 100));
+        return pool.invoke(new SumTask(array));
     }
 }
