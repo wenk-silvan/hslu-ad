@@ -1,17 +1,21 @@
 package ch.hslu.ad.sw10;
 
-class Sort {
-    static int[] insertionSort(final int[] array) {
+public class Sort {
+    public static int[] insertionSort(final int[] array) {
+        return insertionSort(array, 1, array.length);
+    }
+
+    public static int[] insertionSort(final int[] array, int min, int max) {
         int element;
         int j;
-        for (int i = 1; i < array.length; i++) {
-         element = array[i];
-         j = i;
-         while ((j > 0) && array[j - 1] > element) {
-             array[j] = array[j - 1];
-             j--;
-         }
-         array[j] = element;
+        for (int i = min; i < max; i++) {
+            element = array[i];
+            j = i;
+            while ((j > 0) && array[j - 1] > element) {
+                array[j] = array[j - 1];
+                j--;
+            }
+            array[j] = element;
         }
         return array;
     }

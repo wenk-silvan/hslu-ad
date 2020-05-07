@@ -15,6 +15,8 @@
  */
 package ch.hslu.ad.sw12.exercise.n4.quicksort;
 
+import ch.hslu.ad.sw10.Sort;
+
 import java.util.concurrent.RecursiveAction;
 
 /**
@@ -45,28 +47,43 @@ public final class QuicksortTask extends RecursiveAction {
 
     @Override
     protected void compute() {
-        int up = this.min;
-        int down = this.max - 1;
-        int separator = array[this.max];
-        boolean allChecked = false;
-        do {
-            while (array[up] < separator) {
-                up++;
+        if ((this.max - this.min) <= THRESHOLD) {
+            Sort.insertionSort(array, min, max);
+        } else {
+            int up = this.min;
+            int down = this.max - 1;
+            int separator = array[this.max];
+            boolean allChecked = false;
+            do {
+                while (array[up] < separator) {
+                    up++;
+                }
+                while ((array[down] > separator) && (down > up)) {
+                    down--;
+                }
+                if (down > up) {
+                    exchange(array, up, down);
+                    up++;
+                    down--;
+                } else {
+                    allChecked = true;
+                }
+            } while (!allChecked);
+            exchange(array, up, this.max);
+
+            QuicksortTask left = null;
+            if (this.min < (up - 1)) {
+                left = new QuicksortTask(array, this.min, (up - 1));
+                left.fork();
             }
-            while ((array[down] > separator) && (down > up)) {
-                down--;
+            QuicksortTask right = null;
+            if ((up + 1) < this.max) {
+                right = new QuicksortTask(array, (up + 1), this.max);
+                right.fork();
             }
-            if (down > up) {
-                exchange(array, up, down);
-                up++;
-                down--;
-            } else {
-                allChecked = true;
-            }
-        } while (!allChecked);
-        exchange(array, up, this.max);
-        if (this.min < (up - 1)) new QuicksortTask(array, this.min, (up - 1)).fork();
-        if ((up + 1) < this.max) new QuicksortTask(array, (up + 1), this.max).fork();
+            if (left != null) left.join();
+            if (right != null) right.join();
+        }
     }
 
     private static void exchange(final int[] arr, final int firstIndex, final int secondIndex) {

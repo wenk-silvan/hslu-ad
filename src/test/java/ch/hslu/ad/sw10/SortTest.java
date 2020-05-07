@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,8 +18,9 @@ class SortTest {
 
     @Test
     void testInsertionSortShort() {
-        int[] expected = {-1, 0, 1, 3, 3, 4, 5, 19};
+        int[] expected = Arrays.copyOf(this.shortArray, this.shortArray.length);
         var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.insertionSort(this.shortArray));
+        Arrays.sort(expected);
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
