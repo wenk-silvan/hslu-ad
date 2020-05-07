@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static ch.hslu.ad.helper.Timer.stopWatch;
+import static ch.hslu.ad.helper.Timer.stopWatchMilli;
 
 /**
  * 100 grosse Primzahlen produzieren.
@@ -51,9 +48,9 @@ public final class PrimeCheck {
     public static void main(String[] args) {
         int count = 100;
         int certainty = Integer.MAX_VALUE;
-        //stopWatch(LOG, j -> getPrimesSequentially(count, certainty));
-        stopWatch(LOG, j -> getManyPrimesParallel(4, 25, certainty));
-        stopWatch(LOG, j -> getManyPrimesParallel(10, 10, certainty));
+        //stopWatchMilli(LOG, j -> getPrimesSequentially(count, certainty));
+        stopWatchMilli(LOG, j -> getManyPrimesParallel(4, 25, certainty));
+        stopWatchMilli(LOG, j -> getManyPrimesParallel(10, 10, certainty));
     }
 
     /**

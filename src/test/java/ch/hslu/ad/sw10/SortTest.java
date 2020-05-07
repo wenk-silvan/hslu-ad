@@ -18,7 +18,7 @@ class SortTest {
     @Test
     void testInsertionSortShort() {
         int[] expected = {-1, 0, 1, 3, 3, 4, 5, 19};
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.insertionSort(this.shortArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.insertionSort(this.shortArray));
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
@@ -26,18 +26,18 @@ class SortTest {
 
     @Test
     void testInsertionSortMedium() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.insertionSort(this.mediumArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.insertionSort(this.mediumArray));
     }
 
     @Test
     void testInsertionSortLong() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.insertionSort(this.longArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.insertionSort(this.longArray));
     }
 
     @Test
     void testSelectionSortShort() {
         int[] expected = {-1, 0, 1, 3, 3, 4, 5, 19};
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.selectionSort(this.shortArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.selectionSort(this.shortArray));
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
@@ -45,18 +45,18 @@ class SortTest {
 
     @Test
     void testSelectionSortMedium() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.selectionSort(this.mediumArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.selectionSort(this.mediumArray));
     }
 
     @Test
     void testSelectionSortLong() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.selectionSort(this.longArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.selectionSort(this.longArray));
     }
 
     @Test
     void testBubbleSortShort() {
         int[] expected = {-1, 0, 1, 3, 3, 4, 5, 19};
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.bubbleSort(this.shortArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.bubbleSort(this.shortArray));
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
@@ -64,12 +64,12 @@ class SortTest {
 
     @Test
     void testBubbleSortMedium() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.bubbleSort(this.mediumArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.bubbleSort(this.mediumArray));
     }
 
     @Test
     void testBubbleSortLong() {
-        var actual = (new Timer<int[]>()).stopWatch(LOG, () -> Sort.bubbleSort(this.longArray));
+        var actual = (new Timer<int[]>()).stopWatchMilli(LOG, () -> Sort.bubbleSort(this.longArray));
     }
 
     private int[] generateRandomArray(int n){

@@ -17,12 +17,11 @@ package ch.hslu.ad.sw09.exercise.n3.conclist;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.IntConsumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static ch.hslu.ad.helper.Timer.stopWatch;
+import static ch.hslu.ad.helper.Timer.stopWatchMilli;
 
 /**
  * Demonstration einer synchrnisierten List mit n Producer und m Consumer.
@@ -42,9 +41,9 @@ public final class DemoConcurrentList {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        stopWatch(LOG, f -> calculateSum(new LinkedList<>()));
-        stopWatch(LOG, f -> calculateSum(Collections.synchronizedList(new LinkedList<>())));
-        stopWatch(LOG, f -> calculateSum(new LinkedBlockingDeque<>()));
+        stopWatchMilli(LOG, f -> calculateSum(new LinkedList<>()));
+        stopWatchMilli(LOG, f -> calculateSum(Collections.synchronizedList(new LinkedList<>())));
+        stopWatchMilli(LOG, f -> calculateSum(new LinkedBlockingDeque<>()));
     }
 
     /**
