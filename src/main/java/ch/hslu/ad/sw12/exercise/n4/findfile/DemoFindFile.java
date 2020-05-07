@@ -16,6 +16,8 @@
 package ch.hslu.ad.sw12.exercise.n4.findfile;
 
 import java.io.File;
+
+import ch.hslu.ad.helper.Timer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,12 +42,12 @@ public final class DemoFindFile {
     public static void main(String[] args) {
         final String search = "find.me";
         final File rootDir = new File(System.getProperty("user.home"));
-        LOG.info("Start searching '" + search + "' recurive in '" + rootDir + "'");
-        FindFile.findFile(search, rootDir);
-        LOG.info("Found in ?");
-        LOG.info("Find " + search + " concurrent in " + rootDir);
+        LOG.info("Start searching '" + search + "' recursive in '" + rootDir + "'");
+        Timer.stopWatchNano(LOG, func -> FindFile.findFile(search, rootDir));
+        System.out.println();
+        LOG.info("Start searching '" + search + "' concurrent in " + rootDir + "'");
         final FindFileTask root = new FindFileTask(search, rootDir);
-        LOG.info(root.invoke());
-        LOG.info("Found in ?");
+        final String path = (new Timer<String>()).stopWatchNano(LOG, root::invoke);
+        LOG.info(String.format("Found '%s' in '%s'", search, path));
     }
 }

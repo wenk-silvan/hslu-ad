@@ -15,6 +15,9 @@
  */
 package ch.hslu.ad.sw12.exercise.n4.findfile;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,8 +27,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @SuppressWarnings("serial")
 public final class FindFileTask extends CountedCompleter<String> {
+    private static final Logger LOG = LogManager.getLogger(ch.hslu.ad.sw12.exercise.n4.findfile.FindFileTask.class);
 
-    private final String regex;
+    private final String name;
     private final File dir;
     private final AtomicReference<String> result;
 
@@ -41,12 +45,29 @@ public final class FindFileTask extends CountedCompleter<String> {
 
     private FindFileTask(final CountedCompleter<?> parent, final String regex, final File dir,
             final AtomicReference<String> result) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(parent);
+        this.result = result;
+        this.name = regex;
+        this.dir = dir;
     }
 
     @Override
     public void compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final File[] list = dir.listFiles();
+        if (list != null) {
+            for (File file : list) {
+                if (file.isDirectory()) {
+                    this.addToPendingCount(1);
+                    new FindFileTask(this, name, file, result).fork();
+                } else if (name.equalsIgnoreCase(file.getName())) {
+                    if (this.result.compareAndSet(null, file.getParentFile().toString())) {
+                        this.quietlyCompleteRoot();
+                        break;
+                    }
+                }
+            }
+        }
+        this.tryComplete();
     }
 
     @Override

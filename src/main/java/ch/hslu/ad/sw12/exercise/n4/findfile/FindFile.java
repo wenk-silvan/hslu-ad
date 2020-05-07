@@ -39,8 +39,7 @@ public final class FindFile {
                 if (file.isDirectory()) {
                     findFile(name, file);
                 } else if (name.equalsIgnoreCase(file.getName())) {
-                    LOG.info(file.getParentFile());
-                    return;
+                    LOG.info(String.format("Found '%s' in '%s'", name, file.getParentFile()));
                 }
             }
         }
