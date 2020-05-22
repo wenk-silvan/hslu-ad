@@ -41,7 +41,7 @@ public final class DemoMergesort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 300_000_000;
+        final int size = 100_000_000;
         final int[] array = new int[size];
         final ForkJoinPool pool = new ForkJoinPool();
         RandomInitTask initTask = new RandomInitTask(array, 100);

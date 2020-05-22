@@ -25,7 +25,7 @@ import java.util.concurrent.RecursiveAction;
 @SuppressWarnings("serial")
 public final class QuicksortTask extends RecursiveAction {
 
-    private static final int THRESHOLD = 1;
+    private static final int THRESHOLD = 1000;
     private final int[] array;
     private final int min;
     private final int max;

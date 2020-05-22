@@ -45,7 +45,7 @@ public final class DemoQuicksort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 75_000_000;
+        final int size = 300_000_000;
         final int[] array = new int[size];
         final ForkJoinPool pool = new ForkJoinPool();
 
@@ -55,7 +55,7 @@ public final class DemoQuicksort {
         long sortSum = pool.invoke(new SumTask(array));
         LOG.info("Initialize Checksum : " + initSum);
         LOG.info("Concurrent Checksum : " + sortSum + "\n");
-
+/*
         initSum = initialize(array, pool);
         LOG.info("Start Quicksort Recursive");
         Timer.stopWatchNano(LOG, func -> QuicksortRecursive.quicksort(array));
@@ -68,7 +68,7 @@ public final class DemoQuicksort {
         Timer.stopWatchNano(LOG, func -> Arrays.sort(array));
         sortSum = pool.invoke(new SumTask(array));
         LOG.info("Initialize checksum : " + initSum);
-        LOG.info("Sort checksum       : " + sortSum + "\n");
+        LOG.info("Sort checksum       : " + sortSum + "\n");*/
     }
 
     private static long initialize(int[] array, ForkJoinPool pool) {
