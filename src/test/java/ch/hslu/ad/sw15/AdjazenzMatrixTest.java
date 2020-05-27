@@ -33,9 +33,9 @@ public class AdjazenzMatrixTest {
         LOG.info(am.toString());
         assertEquals(9, am.getCountOfNodes());
         assertEquals(14, am.getCountOfEdges());
-        assertTrue(am.isConnectedDirectly("Luzern", "Lenzburg"));
-        assertTrue(am.isConnectedDirectly("Luzern", "Rotkreuz"));
-        assertFalse(am.isConnectedDirectly("Luzern", "Zug"));
+        assertTrue(am.areNeighbours("Luzern", "Lenzburg"));
+        assertTrue(am.areNeighbours("Luzern", "Rotkreuz"));
+        assertFalse(am.areNeighbours("Luzern", "Zug"));
     }
 
     @Test
@@ -53,21 +53,21 @@ public class AdjazenzMatrixTest {
     @Test
     void testHasDirectLine() {
         final AdjazenzMatrix am = new AdjazenzMatrix(nodeNames, matrix);
-        assertTrue(am.isConnectedDirectly("Zug", "Rotkreuz"));
-        assertFalse(am.isConnectedDirectly("Brugg", "Zurich"));
+        assertTrue(am.areNeighbours("Zug", "Rotkreuz"));
+        assertFalse(am.areNeighbours("Brugg", "Zurich"));
     }
 
     @Test
     void testHasDirectLineThrows() {
         final AdjazenzMatrix am = new AdjazenzMatrix(nodeNames, matrix);
-        assertThrows(IllegalArgumentException.class, () -> am.isConnectedDirectly("Zug", "sd"));
-        assertThrows(IllegalArgumentException.class, () -> am.isConnectedDirectly("", "Zurich"));
+        assertThrows(IllegalArgumentException.class, () -> am.areNeighbours("Zug", "sd"));
+        assertThrows(IllegalArgumentException.class, () -> am.areNeighbours("", "Zurich"));
     }
 
     @Test
     void testGetDirectConnections() {
         final AdjazenzMatrix am = new AdjazenzMatrix(nodeNames, matrix);
-        final var stations = am.getDirectConnections("Aarau");
+        final var stations = am.getNeighbours("Aarau");
         assertEquals(2, stations.size());
         assertTrue(stations.contains("Lenzburg"));
         assertTrue(stations.contains("Brugg"));
@@ -77,8 +77,8 @@ public class AdjazenzMatrixTest {
     @Test
     void testGetDirectConnectionsThrows() {
         final AdjazenzMatrix am = new AdjazenzMatrix(nodeNames, matrix);
-        assertThrows(IllegalArgumentException.class, () -> am.getDirectConnections(""));
-        assertThrows(IllegalArgumentException.class, () -> am.getDirectConnections("asdfasdf"));
+        assertThrows(IllegalArgumentException.class, () -> am.getNeighbours(""));
+        assertThrows(IllegalArgumentException.class, () -> am.getNeighbours("asdfasdf"));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class AdjazenzMatrixTest {
         LOG.info(am.toString());
         assertEquals(7, am.getCountOfNodes());
         assertEquals(9, am.getCountOfEdges());
-        assertThrows(IllegalArgumentException.class, () -> am.getDirectConnections(nodeToRemove));
+        assertThrows(IllegalArgumentException.class, () -> am.getNeighbours(nodeToRemove));
     }
 
     @Test

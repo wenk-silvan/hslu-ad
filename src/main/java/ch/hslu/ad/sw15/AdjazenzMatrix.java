@@ -52,7 +52,7 @@ public class AdjazenzMatrix {
         return this.nodeNames.size();
     }
 
-    public ArrayList<String> getDirectConnections(final String node) {
+    public ArrayList<String> getNeighbours(final String node) {
         final ArrayList<String> neighbours = new ArrayList<>();
         final int index = this.getIndexOfNode(node);
         for (int i = 0; i < this.matrix[index].length; i++) {
@@ -67,7 +67,7 @@ public class AdjazenzMatrix {
         return this.nodeNames.get(index);
     }
 
-    public boolean isConnectedDirectly(final String from, final String to) {
+    public boolean areNeighbours(final String from, final String to) {
         if (!this.nodeNames.contains(from)) {
             throw new IllegalArgumentException(String.format("From '%s' does not exist.", from));
         } else if (!this.nodeNames.contains(to)) {

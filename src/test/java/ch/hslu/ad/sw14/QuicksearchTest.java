@@ -52,6 +52,7 @@ public class QuicksearchTest {
             System.out.println(ex.getMessage());
         }
     }
+
     @Test
     void optimalMismatchTestSimple() {
         String pattern = "hello";
