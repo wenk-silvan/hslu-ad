@@ -7,7 +7,7 @@ public class Node {
     public Color color;
     private String name;
 
-    public Node (final String name) {
+    public Node(final String name) {
         this.name = name;
         this.color = Color.WHITE;
     }
@@ -22,7 +22,8 @@ public class Node {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(color, name);
+    public String toString() {
+        return String.format("[name=%s;color=%s]",
+                name, color == Color.WHITE ? "White" : color == Color.GRAY ? "Gray" : "Black");
     }
 }
